@@ -35,7 +35,40 @@ newt <- function(theta,func,grad,hess=NULL,...,
     }
   }
 
+
+  th0 <- theta
+  f0 <- func(th0,...)
+  g0 <- grad(th0,...)
+  h0 <- hess(th0,...)
+
+  # Check if the initial theta is suitable for optimization
+  # Check if objective function value is -inf
+  if (is.infinite(f0) & f0 < 0)
+    stop("Function is unbounded below.")
+  # Check if objective or derivatives are not finite
+  else if (is.infinite(f0) | any(is.infinite(g0)) | any(is.infinite(h0)))
+    stop("Objective or derivatives are not finite at the initial theta.")
+
+  it <- 0
+  while (any(abs(g0) >= tol*abs(f0+fscale))) {
   
+  
+    if (it == maxit)
+      stop("Maxit is reached without convergence.")
+  
+  
+    # If h0 is not positive definite then perturb it to be
+    # by adding a multiple of identity matrix
+    if (inherits(try(chol(h0),silent=TRUE),"try-error")) {
+      m <- (1e-6)*norm(h0) # Multiplier of identity matrix
+    
+      while (inherits(try(chol(h0),silent=TRUE),"try-error")) {
+        diag(h0) <- diag(h0) + m
+        m <- 10*m
+        cat(m)
+      }
+    }
+  }
 }
 
 rb <- function(th,k=2) {
