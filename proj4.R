@@ -40,10 +40,10 @@ newt <- function(theta,func,grad,hess=NULL,...,
   # Use Newton's method to find minimum of func
   
   # Input:
-  #   theta - vector of initial values for the optimization parameters
+  #   theta - vector of initial guesses
   #   func - the objective function to minimize; Its first argument is the 
   #   vector of optimization parameters. Remaining arguments will be passed 
-  #   from newt using ‘...
+  #   from newt using '...'
   #   grad - the gradient function. It has the same arguments as func.
   #   hess - the Hessian matrix function. It has the same arguments as func.
   #   If not supplied then newt should obtain an approximation to the
@@ -114,7 +114,7 @@ newt <- function(theta,func,grad,hess=NULL,...,
       }
     }
     
-    # Calculate the step
+    # Calculate the step -(H(theta))^{-1}g(theta)
     R <- chol(h0)
     step <- -backsolve(R,forwardsolve(t(R),g0))
     
