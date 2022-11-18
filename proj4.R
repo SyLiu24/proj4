@@ -52,7 +52,7 @@ newt <- function(theta,func,grad,hess=NULL,...,
   #   tol - the convergence tolerance
   #   fscale - a rough estimate of the magnitude of func near the optimum
   #   maxit - the maximum number of Newton iterations to try
-  #   max.half the maximum number of times a step can be halved
+  #   max.half - the maximum number of times a step can be halved
   #   eps - the finite difference intervals
   
   # Returns a list containing
