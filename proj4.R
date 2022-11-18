@@ -139,7 +139,6 @@ newt <- function(theta,func,grad,hess=NULL,...,
     
     # Update iterates
     th0 <- th1
-    # cat(th0,'\n')
     f0 <- f1
     g0 <- grad(th1,...)
     h0 <- hess(th1,...)

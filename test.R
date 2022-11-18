@@ -39,9 +39,7 @@ nll<-function(th,t,y){
   mu<-th[1]*exp(th[2]*t)
   -sum(dpois(y,mu,log=TRUE))
 }
-# gll<-function(th,t,y){
-#   c(sum(-y/th[1]+exp(t*th[2])),sum(-y*t+t*th[1]*exp(t*th[2])))
-# }
+
 gll <- function(theta,t,y) {
   ## grad of -ve log lik of Poisson AIDS early epidemic model
   alpha <- theta[1];beta <- theta[2] ## enhances readability
@@ -68,3 +66,4 @@ t=1:13
 y=c(12,14,33,50,67,74,123,141,165,204,253,246,240)
 fit <- optim(c(10,.1),nll,gr=gll,y=y,t=t,method="BFGS",hessian=TRUE)
 fit
+newt(c(10,.1),nll,gll,hess=NULL,t,y)
